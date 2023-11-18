@@ -1,1 +1,7 @@
-/*Schrijf hier jouw css voor jouw formulier*/
+form {
+    width: 100%;
+}
+
+input, label {
+    display: block;
+}
