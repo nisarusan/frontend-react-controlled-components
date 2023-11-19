@@ -4,7 +4,14 @@ import './App.css';
 
 const Form = () => {
 
-    const {handleSubmit, formState: { errors }, register} = useForm();
+    const {handleSubmit, formState: { errors }, register, watch} = useForm({
+        mode : 'onblur',
+        defaultValues: {
+            'found-through': 'advertentie',
+            age: 12
+        }}
+    );
+    const watchSelectedReferrer = watch('found-through');
     const handleFormSubmit = (data) => {
         console.log(data);
     }
@@ -33,6 +40,7 @@ const Form = () => {
                     />
                     {errors.name && <p>{errors.name.message}</p>}
                 </label>
+                {watchSelectedReferrer === "other" &&
                 <label htmlFor="age">
                     Leeftijd:
                     <input type="text"
@@ -46,7 +54,7 @@ const Form = () => {
                            })}
                     />
                     {errors.age && <p>{errors.age.message}</p>}
-                </label>
+                </label>}
             </fieldset>
             <fieldset>
                 <legend>Jouw review</legend>
@@ -61,9 +69,19 @@ const Form = () => {
                     />
                     {errors.description && <p>{errors.description.message}</p>}
                 </label>
+                <label htmlFor="referrer">
+                    Hoe heb je dit recept gevonden?
+                    <select id="referrer" {...register("found-through")}>
+                        <option value="google">Google</option>
+                        <option value="friend">Vriend</option>
+                        <option value="advertisement">Advertentie</option>
+                        <option value="other">Anders</option>
+                    </select>
+                </label>
                 <label htmlFor="checkbox">
                     <input type="checkbox"/> Ik schrijf me in voor de nieuwsbrief</label>
                 <button type="submit">Ik schrijf me in voor de nieuwsbrief</button>
+
             </fieldset>
         </form>
     )
